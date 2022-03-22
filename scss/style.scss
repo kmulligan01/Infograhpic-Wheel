@@ -1,0 +1,312 @@
+@use "sass:math";
+
+body {
+  background: #eee;
+}
+$white:         #ffffff;
+$light-black:   #323243;
+$black: 		#000;
+$blue:          #328FCE;
+
+/// @param {Integer} $item-count - Number of items on the circle
+/// @param {Length} $circle-size - Large circle size
+/// @param {Length} $item-size - Single item size
+
+
+@mixin on-circle($item-count, $circle-size, $item-size,) {  
+  position: relative;
+  width:  $circle-size;
+  height: $circle-size;
+  border-radius: 50%;
+ 
+  > *{
+    display: block;
+    position: absolute;
+    top:  50%; 
+    left: 50%;
+    margin: -(calc($item-size / 2));
+    width:  $item-size;
+    height: $item-size;
+  
+    $angle: calc(360 / $item-count);
+    $rot: 0;
+
+    @for $i from 1 through $item-count {
+      &:nth-of-type(#{$i}) {
+        transform: rotate($rot * 1deg) translate(calc($circle-size / 2)) rotate($rot * -1deg); 
+      }      
+      $rot: $rot + $angle;
+    }   
+  }
+
+}
+.infographic {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+.textbox-container {
+    width: 30%;
+	background: $white;
+	margin: auto;
+	padding: 50px;
+  -webkit-box-shadow: 0px 3px 9px -4px $black; 
+  box-shadow: 0px 3px 9px -4px $black;
+
+	.textbox {
+		display: none;
+	}
+	.textbox.active {
+		display: block;
+	}
+    h4{
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 24px;
+    }
+    h3{ 
+        font-size: 36px;
+        font-weight: bold;
+        line-height: 48px;
+        color: $blue;
+    }
+    p{
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+    }
+	
+}
+
+.next-button{
+	float: right;
+	background: $light-black;
+	color: $white;
+	font-size: 16px;
+	font-weight: bold;
+	border: none;
+
+	&:hover{
+		background: #464655;
+	}
+}
+
+.prev-button{
+	background: $light-black;
+	color: $white;
+	font-size: 16px;
+	font-weight: bold;
+	border: none;
+
+	&:hover{
+		background: #464655;
+	}
+}
+
+.div2 {
+	position: absolute;
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	cursor: pointer;
+  
+  &[data-img="0"]{
+    background: #2893B1;
+  }
+  &[data-img="1"]{
+    background: #37B0D2;
+  }
+   &[data-img="2"]{
+    background: #59BDD9;
+  }
+   &[data-img="3"]{
+    background: #58C6D0;
+  }
+   &[data-img="4"]{
+    background: #4FB5A1;
+  }
+   &[data-img="5"]{
+    background: #E7AB4B;
+  }
+   &[data-img="6"]{
+    background: #EBBC6F;
+  }
+   &[data-img="7"]{
+    background: #F0CD93;
+  }
+   &[data-img="8"]{
+    background: #F3D5A5;
+  }
+   &[data-img="9"]{
+    background: #F8E6C9;
+  }
+   &[data-img="10"]{
+    background: #FCD9DC;
+  }
+   &[data-img="11"]{
+    background: #F9B4B9;
+  }
+   &[data-img="12"]{
+    background: #F68E96;
+  }
+   &[data-img="13"]{
+    background: #F36874;
+  }
+   &[data-img="14"]{
+    background: #F04B58;
+  }
+}
+.labels {
+	font-size: 14px;
+	cursor: pointer;  
+  
+  &[data-value="0"]{
+    margin-left: 40px;
+    margin-top: -5px;
+  }
+   &[data-value="1"]{
+    margin-left: 35px;
+    margin-top: 10px;
+  }
+    &[data-value="2"]{
+    margin-left: 40px;
+    margin-top: 10px;
+  }
+    &[data-value="3"]{
+    margin-left: 10px;
+    margin-top: 40px;
+  }
+  
+  &[data-value="4"]{
+    margin-left: -20px;
+    margin-top: 30px;
+  }
+  &[data-value="5"]{
+    margin-left: -70px;
+    margin-top: 30px;
+  }
+    &[data-value="6"]{
+    margin-left: -120px;
+    margin-top: 10px;
+  } 
+   &[data-value="7"]{
+    margin-left: -110px;
+  }
+   &[data-value="8"]{
+    margin-left: -90px;
+    margin-top: -5px;
+  }
+    &[data-value="9"]{
+    margin-left: -125px;
+    margin-top: -10px;
+  }
+  &[data-value="10"]{
+    margin-left: -110px;
+    margin-top: -30px;
+  }
+  &[data-value="11"]{
+    margin-left: -30px;
+    margin-top: -60px;
+  }
+    &[data-value="12"]{
+    margin-left: 40px;
+    margin-top: -35px;
+  }
+  &[data-value="13"]{
+    margin-left: 40px;
+    margin-top: -20px;
+  }
+  &[data-value="14"]{
+    margin-left: 50px;
+    margin-top: -10px;
+  }
+}
+.label-active {
+	font-weight: bold;
+	color: #252525;
+}
+
+#parent-div {
+  background: $white;
+  width: 100%;
+  height: auto;
+}
+.circle-container {
+   @include on-circle($item-count: 15, $circle-size: 25em, $item-size: 1.5em); 
+	margin: 5em auto 0;
+	border: solid 5px #707070;
+  background-repeat: no-repeat;
+  background-position: center;	
+
+&.image-0 {
+	background-image: url("https://www.everhealthsoftware.com/wp-content/uploads/EverHealth-Wheel-graphics_EMR.svg");
+}
+&.image-1 {
+	background-image: url("https://www.everhealthsoftware.com/wp-content/uploads/EverHealth-Wheel-graphics_Telehealth.svg");
+  img {
+     border: 10px solid $white;
+  }
+}
+&.image-2 {
+	background-image: url("https://www.everhealthsoftware.com/wp-content/uploads/EverHealth-Wheel-graphics_paperless.svg");
+
+	
+}
+&.image-3 {
+	background-image: url("https://www.everhealthsoftware.com/wp-content/uploads/EverHealth-Wheel-graphics_Patient-Portal.svg");
+
+	
+}
+&.image-4 {
+	background-image: url("https://www.everhealthsoftware.com/wp-content/uploads/EverHealth-Wheel-graphics_patient-engagement.svg");
+	
+}
+&.image-5 {
+	background-image: url("https://www.everhealthsoftware.com/wp-content/uploads/EverHealth-Wheel-graphics_SMS.svg");
+	
+	
+}
+&.image-6 {
+	background-image: url("https://www.everhealthsoftware.com/wp-content/uploads/EverHealth-Wheel-graphics_Remote-Patient-Monitoring.svg");
+	
+	
+}
+&.image-7 {
+	background-image: url("https://www.everhealthsoftware.com/wp-content/uploads/EverHealth-Wheel-graphics_Chronic-Care.svg");
+
+	
+}
+&.image-8 {
+	background-image: url("https://www.everhealthsoftware.com/wp-content/uploads/EverHealth-Wheel-graphics_Analytics.svg");
+	
+
+}
+&.image-9 {
+	background-image: url("https://www.everhealthsoftware.com/wp-content/uploads/EverHealth-Wheel-graphics_online-reputation.svg");
+	
+}
+&.image-10 {
+	background-image: url("https://www.everhealthsoftware.com/wp-content/uploads/EverHealth-Wheel-graphics_revenue-cycle.svg");
+
+}
+&.image-11 {
+	background-image: url("https://www.everhealthsoftware.com/wp-content/uploads/EverHealth-Wheel-graphics_claims-clearing-house.svg");
+
+	
+}
+&.image-12 {
+	background-image: url("https://www.everhealthsoftware.com/wp-content/uploads/EverHealth-Wheel-graphics_charge-capture.svg");
+	
+}
+&.image-13 {
+	background-image: url("https://www.everhealthsoftware.com/wp-content/uploads/EverHealth-Wheel-graphics_practice-management-.svg");
+
+}
+&.image-14 {
+	background-image: url("https://www.everhealthsoftware.com/wp-content/uploads/EverHealth-Wheel-graphics_integrated-payments.svg");
+}
+}
+
+
+
